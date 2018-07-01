@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 // const util = require('util');
-// var cors = require('cors');
+var cors = require('cors');
 
 const { Op } = require('./db/sequelize');
 const { Model, MoveTable, createModel, updateModel } = require('./models/Model');
@@ -14,10 +14,10 @@ var app = express();
 
 const port = process.env.PORT || 3000;
 
-// app.use(cors())
+app.use(cors())
 app.use(bodyParser.json());
 
-// app.options('*', cors()) // da includere prima delle altre routes
+app.options('*', cors()) // da includere prima delle altre routes
 
 app.get('/isalive', (req, res) => {
     res.send({ message: 'Server is alive' });
