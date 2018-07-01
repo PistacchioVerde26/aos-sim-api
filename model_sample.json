@@ -1,0 +1,227 @@
+{
+    "model_id": "",
+    "name": "CAULDRON OF BLOOD",
+    "move": "*",
+    "wounds": "13",
+    "save_p": "5+",
+    "bravery": "7",
+    "type": "hero",
+    "fk_army": 3,
+    "fk_army2": 0,
+    "keywords": "ORDER, AELF, EXILES, TOTEM, HERO, PRIEST, WITCH ELVES, DEATH HAG,\r\nCAULDRON OF BLOOD, DEATH HAG",
+    "min_unit": -1,
+    "max_unit": -1,
+    "description": "A Cauldron of Blood is a single model.\r\nIt is crewed by two Witch Elves who leap\r\nfrom its dais to attack with their Sacrificial\r\nKnives. Most Cauldrons of Blood are also\r\nattended to by a Death Hag, who opens\r\nthe throats of her victims with a Blade of\r\nKhaine and gifts her followers with drafts\r\nof Witchbrew from her Chalice.\r\nHELLEBRON\r\nOne Cauldron of Blood in your army\r\nmay instead be attended to by Hellebron.\r\nHellebron fights with Deathsword and\r\nthe Cursed Blade, and she also wears the\r\nAmulet of Dark Fire. Hellebron also has\r\nthe Orgy of Slaughter command ability.",
+    "abilities": [
+        {
+            "ability_id": "",
+            "name": "Bloodshield",
+            "description": "The powerful magic that\r\nfuels the Cauldron of Blood grants it\r\nand any Exiles models from your army\r\nprotection so long as they are within range\r\nof the Bloodshield. The range of this ability\r\nis shown in the damage table above. If any\r\nof these models suffer a wound or a mortal\r\nwound, roll a dice. Add 1 to the result if\r\nthe model is a Witch Elf. If the roll is a\r\n6 or more, that hit has been absorbed by\r\nthe Bloodshield and the wound or mortal\r\nwound is ignored.",
+            "command": 0,
+            "fk_model": 346,
+            "ability_table": [
+                {
+                    "_id": "",
+                    "fk_abi": 968,
+                    "range": "0-2",
+                    "value": "9",
+                    "desc": ""
+                },
+                {
+                    "_id": "",
+                    "fk_abi": 968,
+                    "range": "3-5",
+                    "value": "7",
+                    "desc": ""
+                },
+                {
+                    "_id": "",
+                    "fk_abi": 968,
+                    "range": "6-8",
+                    "value": "5",
+                    "desc": ""
+                },
+                {
+                    "_id": "",
+                    "fk_abi": 968,
+                    "range": "9-10",
+                    "value": "3",
+                    "desc": ""
+                },
+                {
+                    "_id": "",
+                    "fk_abi": 968,
+                    "range": "11+",
+                    "value": "1",
+                    "desc": ""
+                }
+            ]
+        },
+        {
+            "ability_id": "",
+            "name": "Witchbrew",
+            "description": "Witchbrew drives the\r\nimbibers into such an ecstasy of\r\ndestruction that they will fight on in the\r\nface of impossible odds. In your hero\r\nphase, the Cauldron of Blood’s attendants\r\nor a unit of Witch Elves within 3\" can\r\ndrink Witchbrew. If a unit does so, you can\r\nre-roll wound rolls of 1 for the unit and\r\nit does not need to take battleshock tests\r\nuntil your next hero phase.",
+            "command": 0,
+            "fk_model": 346,
+            "ability_table": []
+        },
+        {
+            "ability_id": "",
+            "name": "Amulet of Dark Fire",
+            "description": "Hellebron can\r\nattempt to dispel one spell in each enemy\r\nhero phase as if she were a wizard.",
+            "command": 0,
+            "fk_model": 346,
+            "ability_table": []
+        },
+        {
+            "ability_id": "",
+            "name": "Strength of Khaine",
+            "description": "In your hero phase\r\nthe Cauldron of Blood’s attendant can pray\r\nto Khaine. If she does so, pick an Exiles\r\nunit from your army within 14\" and roll a\r\ndice; on a 1 the prayer is found unworthy\r\nand the Cauldron of Blood suffers a mortal\r\nwound. On a roll of 2 or more, the unit you\r\npicked is infused with Khaine’s Strength;\r\nuntil your next hero phase you can add\r\n1 to any wound rolls for that unit in the\r\ncombat phase.",
+            "command": 0,
+            "fk_model": "",
+            "ability_table": []
+        },
+        {
+            "ability_id": "",
+            "name": "Orgy of Slaughter",
+            "description": "If Hellebron uses this\r\nability, pick an Exiles unit within 14\".\r\nThat unit is gripped by a bloody frenzy and\r\ncan be chosen to pile in and attack twice\r\nthat turn instead of only once.",
+            "command": 1,
+            "fk_model": "",
+            "ability_table": []
+        }
+    ],
+    "magics": [],
+    "weapons": [
+        {
+            "wp_id": "",
+            "type": 1,
+            "name": "Witch Elves’ Sacrificial Knives",
+            "range": "1",
+            "attacks": "*",
+            "to_hit": "3+",
+            "to_wound": "4+",
+            "rend": 0,
+            "damage": "1",
+            "fk_model": "",
+            "damage_table": [
+                {
+                    "dmg_id": "",
+                    "fk_weapon": 796,
+                    "range": "0-2",
+                    "value": "6"
+                },
+                {
+                    "dmg_id": "",
+                    "fk_weapon": 796,
+                    "range": "3-5",
+                    "value": "5"
+                },
+                {
+                    "dmg_id": "",
+                    "fk_weapon": 796,
+                    "range": "6-8",
+                    "value": "4"
+                },
+                {
+                    "dmg_id": "",
+                    "fk_weapon": 796,
+                    "range": "9-10",
+                    "value": "3"
+                },
+                {
+                    "dmg_id": "",
+                    "fk_weapon": 796,
+                    "range": "11+",
+                    "value": "2"
+                }
+            ]
+        },
+        {
+            "wp_id": "",
+            "type": 1,
+            "name": "Hellebron’s Deathsword",
+            "range": "1",
+            "attacks": "2",
+            "to_hit": "3+",
+            "to_wound": "3+",
+            "rend": -1,
+            "damage": "D3",
+            "fk_model": 346,
+            "damage_table": []
+        },
+        {
+            "wp_id": "",
+            "type": 1,
+            "name": "Hellebron’s Cursed Blade",
+            "range": "1",
+            "attacks": "2",
+            "to_hit": "3+",
+            "to_wound": "4+",
+            "rend": 0,
+            "damage": "1",
+            "fk_model": "",
+            "damage_table": []
+        },
+        {
+            "wp_id": "",
+            "type": 1,
+            "name": "Death Hag’s Blade of Khaine",
+            "range": "1",
+            "attacks": "4",
+            "to_hit": "3+",
+            "to_wound": "4+",
+            "rend": 0,
+            "damage": "1",
+            "fk_model": 346,
+            "damage_table": []
+        }
+    ],
+    "miscs": [
+        {
+            "misc_id": 545,
+            "type": "leader",
+            "name": "HELLEBRON",
+            "desc": "One Cauldron of Blood in your army\r\nmay instead be attended to by Hellebron.\r\nHellebron fights with Deathsword and\r\nthe Cursed Blade, and she also wears the\r\nAmulet of Dark Fire. Hellebron also has\r\nthe Orgy of Slaughter command ability.",
+            "fk_model": 346
+        },
+        {
+            "misc_id": "",
+            "type": "leader",
+            "name": "DEATH HAG",
+            "desc": "A Death Hag opens\r\nthe throats of her victims with a Blade of\r\nKhaine and gifts her followers with drafts\r\nof Witchbrew from her Chalice.",
+            "fk_model": 346
+        }
+    ],
+    "move_table": [
+        {
+            "move_id": "",
+            "range": "0-2",
+            "value": "6",
+            "fk_model": 346
+        },
+        {
+            "move_id": 272,
+            "range": "3-5",
+            "value": "5",
+            "fk_model": 346
+        },
+        {
+            "move_id": "",
+            "range": "6-8",
+            "value": "4",
+            "fk_model": 346
+        },
+        {
+            "move_id": 274,
+            "range": "9-10",
+            "value": "3",
+            "fk_model": 346
+        },
+        {
+            "move_id": "",
+            "range": "11+",
+            "value": "2",
+            "fk_model": ""
+        }
+    ]
+}
