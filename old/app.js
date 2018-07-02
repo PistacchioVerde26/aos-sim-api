@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 // const util = require('util');
 var cors = require('cors');
 
-const { Op } = require('./db/sequelize');
+const { sequelize, Op } = require('./db/sequelize');
 const { Model, MoveTable, createModel, updateModel } = require('./models/Model');
 const { Ability, AbiTable } = require('./models/Ability');
 const { Weapon, DmgTable } = require('./models/Weapon');
@@ -78,6 +78,17 @@ app.get('/aos/old/models', (req, res) => {
     }).catch(e => {
         res.status(400).send(e);
     });
+})
+
+// AVANZAMENTO NUOVI MODELLI
+
+app.get('/aos/old/progress/newmodels', (req, res) => {
+    sequelize.query(`SELECT new_models.name
+                    FROM new_models LEFT JOIN models ON LOWER(models.name) = LOWER(new_models.name)
+                    WHERE models.name IS NULL
+                    `).then(result => {
+            return res.send(result);
+        }).catch(e => res.sendStatus(400)); 
 })
 
 app.listen(port, () => {

@@ -72,6 +72,24 @@ const updateDmgTable = async (dmgtable, wp_id) => {
     return found;
 }
 
+const checkAndDeleteWeapons = async (oldWps, newWps) => {
+    const weaponsToDelete = [];
+    oldWps.forEach(oldWP => {
+        if (newWps.find(newWP => newWP.wp_id === oldWP.wp_id) == null) {
+            weaponsToDelete.push(oldWP);
+        }
+    })
+    if (weaponsToDelete.length > 0) {
+        weaponsToDelete.forEach(wp => {
+            Weapon.destroy({
+                where: {
+                    wp_id: { [Op.eq]: wp.wp_id }
+                }
+            })
+        })
+    }
+}
+
 const createWeapon = async (weapon, model_id) => {
     weapon.fk_model = model_id;
     newWeapon = await Weapon.create(weapon);
@@ -88,4 +106,4 @@ const createDmgTable = async (dmgtable, wp_id) => {
     return newDmgTable;
 }
 
-module.exports = { Weapon, DmgTable, createWeapon, updateWeapon }
+module.exports = { Weapon, DmgTable, createWeapon, updateWeapon, checkAndDeleteWeapons }

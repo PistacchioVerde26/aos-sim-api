@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize');
 
 const { sequelize, Op } = require('./../db/sequelize');
-const { Ability, createAbility, updateAbility } = require('./Ability');
-const { Weapon, createWeapon, updateWeapon } = require('./Weapon');
-const { Magic, createMagic, updateMagic } = require('./Magic');
-const { Miscs, createMisc, updateMisc } = require('./Miscs');
+const { Ability, AbiTable, createAbility, updateAbility, checkAndDeleteAbility } = require('./Ability');
+const { Weapon, DmgTable, createWeapon, updateWeapon, checkAndDeleteWeapons } = require('./Weapon');
+const { Magic, createMagic, updateMagic, checkAndDeleteMagics } = require('./Magic');
+const { Miscs, createMisc, updateMisc, checkAndDeleteMiscs } = require('./Miscs');
 
 const Model = sequelize.define('model', {
     model_id: {
@@ -50,54 +50,74 @@ Model.hasMany(Magic, { foreignKey: 'fk_model', as: 'magics' });
 Model.hasMany(Miscs, { foreignKey: 'fk_model', as: 'miscs' });
 Model.hasMany(MoveTable, { foreignKey: 'fk_model', as: 'move_table' });
 
-const updateModel = async (model) => {
-
-    found = await Model.findById(model.model_id);
+const updateModel = async (updatedModel) => {
+    found = await Model.findById(updatedModel.model_id, {
+        include: [
+            {
+                model: Ability, as: 'abilities', include: [
+                    { model: AbiTable, as: 'ability_table' }
+                ]
+            },
+            { model: Magic, as: 'magics' },
+            {
+                model: Weapon, as: 'weapons', include: [
+                    { model: DmgTable, as: 'damage_table' }
+                ]
+            },
+            { model: Miscs, as: 'miscs' },
+            { model: MoveTable, as: 'move_table' }
+        ]
+    });
     if (found) {
-
-        Model.update(model, {
+        
+        Model.update(updatedModel, {
             where: {
-                model_id: { [Op.eq]: model.model_id }
+                model_id: { [Op.eq]: updatedModel.model_id }
             }
         });
 
-        if (model.abilities) {
+        if (updatedModel.abilities) {
             console.log('updating abilities');
-            model.abilities.forEach(A => {
-                updateAbility(A, model.model_id);
+            updatedModel.abilities.forEach(A => {
+                updateAbility(A, updatedModel.model_id);
             })
+            checkAndDeleteAbility(found.abilities, updatedModel.abilities);
         }
 
-        if (model.magics) {
+        if (updatedModel.magics) {
             console.log('updating magics');
-            model.magics.forEach(M => {
-                updateMagic(M, model.model_id);
+            updatedModel.magics.forEach(M => {
+                updateMagic(M, updatedModel.model_id);
             })
+            checkAndDeleteMagics(found.magics, updatedModel.magics);
         }
 
-        if (model.weapons) {
+        if (updatedModel.weapons) {
             console.log('updating weapons');
-            model.weapons.forEach(W => {
-                updateWeapon(W, model.model_id);
+            updatedModel.weapons.forEach(W => {
+                updateWeapon(W, updatedModel.model_id);
             })
+            checkAndDeleteWeapons(found.weapons, updatedModel.weapons);
         }
 
-        if (model.miscs) {
+        if (updatedModel.miscs) {
             console.log('updating miscs');
-            model.miscs.forEach(M => {
-                updateMagic(M, model.model_id);
+            updatedModel.miscs.forEach(M => {
+                updateMisc(M, updatedModel.model_id);
             })
+            checkAndDeleteMiscs(found.miscs, updatedModel.miscs);
         }
 
-        if (model.move_table) {
-            model.move_table.forEach(MT => {
-                updateMoveTable(MT, model.model_id);
+        if (updatedModel.move_table) {
+            updatedModel.move_table.forEach(MT => {
+                updateMoveTable(MT, updatedModel.model_id);
             })
+            checkAndDeleteMoveTable(found.move_table, updatedModel.move_table);
         }
 
         return found;
     } else {
-        return createModel(model);
+        return createModel(updatedModel);
     }
 
 }
@@ -117,31 +137,31 @@ const updateMoveTable = async (movet, model_id) => {
 }
 
 const createModel = async (model) => {
-    Model.create(model).then((newModel)=>{
+    Model.create(model).then((newModel) => {
         if (model.abilities) {
             model.abilities.forEach(A => {
                 createAbility(A, newModel.model_id)
             })
         }
-    
+
         if (model.magics) {
             model.magics.forEach(M => {
                 createMagic(M, newModel.model_id);
             })
         }
-    
+
         if (model.weapons) {
             model.weapons.forEach(W => {
                 createWeapon(W, newModel.model_id);
             })
         }
-    
+
         if (model.miscs) {
             model.miscs.forEach(M => {
                 createMisc(M, newModel.model_id);
             })
         }
-    
+
         if (model.move_table) {
             model.move_table.forEach(MT => {
                 createMoveTable(MT, newModel.model_id);
@@ -150,6 +170,25 @@ const createModel = async (model) => {
         return newModel;
     }).catch(e => e);
 
+}
+
+const checkAndDeleteMoveTable = async (oldMts, newMts) => {
+    const moveTableToDelete = [];
+    oldMts.forEach(oldMT => {
+        if (newMts.find(newMT => newMT.move_id === oldMT.move_id) == null) {
+            moveTableToDelete.push(oldMT);
+        }
+    })
+    if (moveTableToDelete.length > 0) {
+        moveTableToDelete.forEach(mt => {
+            MoveTable.destroy({
+                where: {
+                    move_id: { [Op.eq]: mt.move_id }
+                }
+            })
+        })
+
+    }
 }
 
 const createMoveTable = async (moveTable, model_id) => {

@@ -20,16 +20,35 @@ let Magic = sequelize.define('magic', {
 
 const updateMagic = async (magic, model_id) => {
     found = await Magic.findById(magic.magic_id);
-    if(found){
+    if (found) {
         Magic.update(magic, {
             where: {
-                magic_id: {[Op.eq]: magic.magic_id}
+                magic_id: { [Op.eq]: magic.magic_id }
             }
         })
-    }else{
+    } else {
         createMagic(magic, model_id);
     }
     return found;
+}
+
+const checkAndDeleteMagics = async (oldMagics, newMagics) => {
+    const magicsToDelete = [];
+    oldMagics.forEach(oldM => {
+        if (newMagics.find(newM => newM.magic_id === oldM.magic_id) == null) {
+            magicsToDelete.push(oldM);
+        }
+    })
+    if (magicsToDelete.length > 0) {
+        magicsToDelete.forEach(m => {
+            Magic.destroy({
+                where: {
+                    magic_id: { [Op.eq]: m.magic_id }
+                }
+            })
+        })
+
+    }
 }
 
 const createMagic = async (magic, model_id) => {
@@ -38,4 +57,4 @@ const createMagic = async (magic, model_id) => {
     return newMagic;
 }
 
-module.exports = { Magic, createMagic, updateMagic }
+module.exports = { Magic, createMagic, updateMagic, checkAndDeleteMagics }

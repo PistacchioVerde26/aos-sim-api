@@ -18,6 +18,24 @@ let Miscs = sequelize.define('misc', {
         freezeTableName: true
     });
 
+const checkAndDeleteMiscs = async (oldMiscs, newMiscs) => {
+    const miscsToDelete = [];
+    oldMiscs.forEach(oldM => {
+        if (newMiscs.find(newM => newM.misc_id === oldM.misc_id) == null) {
+            miscsToDelete.push(oldM);
+        }
+    })
+    if (miscsToDelete.length > 0) {
+        miscsToDelete.forEach(m => {
+            Miscs.destroy({
+                where: {
+                    misc_id: { [Op.eq]: m.misc_id }
+                }
+            })
+        })
+
+    }
+}
 
 const updateMisc = async (misc, model_id) => {
     found = await Miscs.findById(misc.misc_id);
@@ -39,4 +57,4 @@ const createMisc = async (misc, model_id) => {
     return newMisc;
 }
 
-module.exports = { Miscs, createMisc, updateMisc }
+module.exports = { Miscs, createMisc, updateMisc, checkAndDeleteMiscs }

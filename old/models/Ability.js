@@ -53,10 +53,28 @@ const updateAbility = async (ability, model_id) => {
             createAbility(ability, model_id);
         }
         return found;
-    } catch (error){
+    } catch (error) {
         console.log(error)
     }
 
+}
+
+const checkAndDeleteAbility = async (oldAbis, newAbis) => {
+    const abilitiesToDelete = [];
+    oldAbis.forEach(oldAbi => {
+        if (newAbis.find(newAbi => newAbi.ability_id === oldAbi.ability_id) == null) {
+            abilitiesToDelete.push(oldAbi);
+        }
+    })
+    if (abilitiesToDelete.length > 0) {
+        abilitiesToDelete.forEach(abi => {
+            Ability.destroy({
+                where: {
+                    ability_id: { [Op.eq]: abi.ability_id }
+                }
+            })
+        })
+    }
 }
 
 const updateAbiTable = async (abitable, abi_id) => {
@@ -89,4 +107,4 @@ const createAbiTable = async (abitable, abi_id) => {
     return newAbi;
 }
 
-module.exports = { Ability, AbiTable, createAbility, updateAbility }
+module.exports = { Ability, AbiTable, createAbility, updateAbility, checkAndDeleteAbility }

@@ -5,4 +5,9 @@ const sequelize = new Sequelize('mysql://bpkpenhzi0brtsrd:p64svbslxikvsnzm@jsftj
     logging: false
 });
 
+// const sequelize = new Sequelize('aos_db_testing', 'root', '', {
+//     dialect: 'mysql',
+//     logging: true
+// });
+
 module.exports = { sequelize, Op }
