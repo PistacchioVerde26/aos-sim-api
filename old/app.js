@@ -88,7 +88,7 @@ app.get('/aos/old/progress/newmodels', (req, res) => {
                     WHERE models.name IS NULL
                     `).then(result => {
             return res.send(result);
-        }).catch(e => res.sendStatus(400)); 
+        }).catch(e => res.send(400).send(e)); 
 })
 
 app.listen(port, () => {
