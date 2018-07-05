@@ -88,7 +88,14 @@ app.get('/aos/old/progress/newmodels', (req, res) => {
                     WHERE models.name IS NULL
                     `).then(result => {
             return res.send(result);
-        }).catch(e => res.send(400).send(e)); 
+        }).catch(e => res.send(400).send(e));
+})
+
+app.get('/aos/old/progress/updatedmodels', (req, res) => {
+    sequelize.query(`SELECT models.model_id, models.name
+    FROM models INNER JOIN new_models ON LOWER(new_models.name) = LOWER(models.name)`).then(result => {
+            return res.send(result);
+        }).catch(e => res.send(400).send(e));
 })
 
 app.listen(port, () => {
